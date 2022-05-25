@@ -1,0 +1,99 @@
+{
+    "exp_name": "base",
+    "exp_id": "01",
+    
+    "model": {
+        "type": "BaseDynamics",
+        "args": {
+            "input_dim": 32,
+            "latent_dim": 8,
+            "obs_filters": 8,
+            "obs_dim": 20,
+            "init_filters": 8,
+            "init_dim": 3,
+            "ems_filters": 4,
+            "domain": false,
+            "trans_model": "recurrent",
+            "trans_args": {
+                "z_dim": 8,
+                "transition_dim": 100,
+                "identity_init": true,
+                "domain": false,
+                "stochastic": false
+            }
+        }
+    },
+
+    "data":{
+        "data_set": "BouncingBallDataLoader",
+        "data_dir": "data/bouncing_ball",
+        "data_name": "mixed_gravity_16",
+        "num_workers": 1,
+        "k_shot": 0,
+        "eval_tags": [
+            "pred_0",
+            "pred_1",
+            "pred_2",
+            "pred_4",
+            "pred_7",
+            "pred_8",
+            "pred_9",
+            "pred_10",
+            "pred_11",
+            "pred_12",
+            "pred_13",
+            "pred_14",
+            "target_pred_3",
+            "target_pred_5",
+            "target_pred_6",
+            "target_pred_15"
+        ]
+    },
+
+    "optimizer": {
+        "type": "Adam",
+        "args": {
+            "lr": 5e-4,
+            "amsgrad": false,
+            "betas": [0.9, 0.999]
+        }
+    },
+    "lr_scheduler": 0,
+
+    "loss": "dmm_loss",
+    "metrics": [
+        "mse", "vpt", "dst", "vpd"
+    ],
+
+    "batch_size": 50,
+    "device": 0,
+    "training": {
+        "epochs": 200,
+        "overfit_single_batch": false,
+
+        "save_period": 50,
+        "loss_type": "bce",
+        "domain": false,
+
+        "monitor": "min val_loss",
+        "early_stop": 50,
+
+        "min_annealing_factor": 0.0,
+        "anneal_update": 100,
+
+        "total_len": 20,
+        "obs_len": 20,
+
+        "lambda": 1,
+        "r1": 1e-1,
+        "r2": 0,
+        "r3": 0,
+        "l": 1e-1
+    },
+    "evaluating": {
+        "total_len": 20,
+        "domain": false
+    },
+    
+    "best_model": "m_best"
+}
